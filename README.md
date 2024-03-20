@@ -56,3 +56,11 @@ Instale as dependências (escolher um dos 3 abaixo, eu uso yarn)
   yarn install
   pnpm install
 ```
+
+Inicie o back-end
+
+```bash
+  npm run dev
+  yarn dev
+  pnpm run dev
+```
