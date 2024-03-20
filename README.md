@@ -1,5 +1,13 @@
 
+## Baixar antes de iniciar o projeto
+
+- [NodeJs](https://nodejs.org/en/download/current)
+
+- [Docker](https://docs.docker.com/desktop/install/windows-install/)
+
+
 ## Rodando o projeto
+
 
 Clone o projeto
 
