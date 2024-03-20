@@ -8,7 +8,7 @@ dotenv.config();
 const prisma = new PrismaClient();
 const authRouter = Router();
 
-authRouter.post("/api/auth", async (req: Request, res: Response) => {
+authRouter.post("/auth", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 

@@ -31,6 +31,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const isAuthenticated = !!user;
 
   const authenticateUser = async ({ email, password }: AuthenticateInterface) => {
-    const response = await axios.post("", { email: email, password: password });
+    const response = await axios.post("/api/auth", { email: email, password: password });
+
+    if (response.status === 200) {
+      const token = response.data.token;
+      const user = response.data.user;
+
+      setCookie(null, "token", token, {
+        maxAge: 60 * 60 * 24,
+      });
+
+      setUser(user);
+      return { success: true, message: "Usuário autenticado com sucesso!" };
+    } else {
+      return { success: false, message: "Falha na autenticação" };
+    }
   };
+
+  const signOutUser = () => {
+    setUser(null);
+    destroyCookie(null, "token");
+    window.location.reload();
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, isAuthenticated, authenticateUser, signOutUser }}>{children}</AuthContext.Provider>
+  )
 }

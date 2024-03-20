@@ -12,9 +12,11 @@ const Home = () => {
             Entrar
           </Button>
         </Link>
+        <Link to="/register">
         <Button className="flex ml-4 mt-4 w-40 h-11 text-base font-semibold shadow transition duration-300">
           Cadastrar
         </Button>
+        </Link>
       </div>
     </BaseLayout>
   );
