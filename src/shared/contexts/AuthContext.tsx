@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
+import { recoverUserInformation } from "../services/Auth";
 import axios from "axios";
 
 interface AuthenticateInterface {
@@ -26,12 +27,27 @@ interface AuthContextProps {
 
 export const AuthContext = createContext({} as AuthContextProps);
 
+const delay = (time: number) => new Promise((resolve) => setTimeout(resolve, time));
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const isAuthenticated = !!user;
 
+  useEffect(() => {
+    const { token } = parseCookies();
+    if (token) {
+      recoverUserInformation(token).then((response) => {
+        setUser(response);
+      });
+    }
+  });
+
   const authenticateUser = async ({ email, password }: AuthenticateInterface) => {
-    const response = await axios.post("/api/auth", { email: email, password: password });
+    await delay(1000);
+    const response = await axios.post("http://127.0.0.1:8000/api/auth", {
+      email: email,
+      password: password,
+    });
 
     if (response.status === 200) {
       const token = response.data.token;
@@ -55,6 +71,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, authenticateUser, signOutUser }}>{children}</AuthContext.Provider>
-  )
+    <AuthContext.Provider
+      value={{ user, isAuthenticated, authenticateUser, signOutUser }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
