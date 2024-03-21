@@ -40,7 +40,7 @@ Inicie o front-end
 Abrir outro terminal 
 
 ```bash
-  Cntrl + Shift + 5
+  Ctrl + Shift + 5
 ```
 
 Entre no diretório do servidor
