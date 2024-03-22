@@ -1,8 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { AuthProvider } from "@/shared/contexts/AuthContext"
 import Home from "@pages/home/Home.tsx"
 import Login from "@pages/login/Login"
 import Register from "@/pages/register/Register"
-import { AuthProvider } from "@/shared/contexts/AuthContext"
+import PrivateRoutes from "@/shared/components/PrivateRoutes"
+import Painel from "@/pages/painel/Painel"
 
 function App() {
 
@@ -16,7 +18,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           {/* Routes Closes */}
-          
+          <Route element={<PrivateRoutes/>}>
+            <Route path="/painel" element={<Painel />}/>
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

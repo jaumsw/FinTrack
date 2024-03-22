@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/16/solid";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { Label } from "@radix-ui/react-label";
 import { AuthContext } from "@/shared/contexts/AuthContext";
 import Swal from "sweetalert2";
