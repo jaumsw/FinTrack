@@ -1,4 +1,5 @@
 import { parseCookies } from "nookies";
+import { AxiosError } from 'axios';
 import { delay } from "../services/Auth";
 import axios from "axios";
 
@@ -15,17 +16,33 @@ export const registerUser = async ({
   password,
   confirmPassword,
 }: RegisterInterface) => {
-  delay(1000);
+  try {
+    delay(1000);
 
-  if (password !== confirmPassword) {
-    return { success: false, message: "Senhas não conferem" };
-  }
-  const response = await axios.post("http://127.0.0.1:8000/api/user", { name, email, password });
-  if (response.status === 201) {
-    return { success: true, message: "Usuário criado com sucesso!" };
-  } else if (response.status === 400) {
-    return { success: false, message: "Email ja existe!" };
-  } else {
-    return { success: false, message: "Falha na criação do usuário" };
+    if (password !== confirmPassword) {
+      return { success: false, message: "Senhas não conferem" };
+    }
+
+    const response = await axios.post("http://127.0.0.1:8000/api/user", { name, email, password });
+    
+    if (response.status === 201) {
+      return { success: true, message: "Usuário criado com sucesso!" };
+    }
+  } catch (error) {
+    const err = error as AxiosError; 
+    if (err.response) {
+      const status = err.response.status;
+      if (status === 400) {
+        return { success: false, message: "Email já existe!" };
+      } else if (status === 401) {
+        return { success: false, message: "Não autorizado" };
+      } else {
+        return { success: false, message: `Erro desconhecido: ${status}` };
+      }
+    } else if (err.request) {
+      return { success: false, message: "Sem resposta do servidor" };
+    } else {
+      return { success: false, message: "Erro desconhecido ao enviar solicitação" };
+    }
   }
 };

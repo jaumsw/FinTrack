@@ -57,6 +57,7 @@ const Login = () => {
           }
         }
       } catch (error) {
+        hideLoader()
         console.error("Error:", error);
         Swal.fire({
           title: "Falha na autenticação",
@@ -67,6 +68,19 @@ const Login = () => {
       }
     }
   }
+
+  const hideLoader = () => {
+    const loaderContainer = document.getElementById('hidden');
+
+    if (loaderContainer) {
+        loaderContainer.classList.remove('hidden');
+
+        const loaderDiv = loaderContainer.querySelector('.text-center');
+        if (loaderDiv) {
+            loaderContainer.removeChild(loaderDiv);
+        }
+    }
+};
 
   const showLoader = () => {
     const loaderContainer = document.getElementById("hidden");

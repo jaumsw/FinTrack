@@ -29,7 +29,6 @@ usersRouter.post("/user", async (req: Request, res: Response) => {
     try{
         const { name, email, password } = req.body;
         
-        // Verifica se o email já está em uso
         const existingUser = await prisma.user.findUnique({
             where: {
                 email,
@@ -55,7 +54,7 @@ usersRouter.post("/user", async (req: Request, res: Response) => {
     }
     catch(error){
         console.error("Erro ao criar usuário", error);
-        res.status(500).json({ message: "Erro ao criar usuário" });
+        return res.status(500).json({ message: "Erro ao criar usuário" });
     }
 })
 

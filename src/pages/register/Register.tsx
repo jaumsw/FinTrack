@@ -55,9 +55,9 @@ const Register = () => {
       });
       return;
     }
-    try {
       showLoader();
       const response = await registerUser(data);
+      console.log(response);
       if (response?.success === true) {
         const result = await Swal.fire({
           title: "Sucesso!",
@@ -68,7 +68,8 @@ const Register = () => {
         if (result.isConfirmed) {
           navigate("/login");
         }
-      } else if (response?.message === "Email ja existe!") {
+      } else if (response?.message === "Email já existe!") {
+        hideLoader()
         Swal.fire({
           title: "Erro!",
           text: "Email ja existe!",
@@ -77,6 +78,7 @@ const Register = () => {
         });
       } 
       else {
+        hideLoader()
         Swal.fire({
           title: "Erro!",
           text: "Falha na criação da conta!",
@@ -84,15 +86,20 @@ const Register = () => {
           confirmButtonText: "Ok",
         });
       }
-    } catch (error) {
-      Swal.fire({
-        title: "Erro!",
-        text: "Falha na criação da conta!",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-    }
   };
+
+  const hideLoader = () => {
+    const loaderContainer = document.getElementById('hidden');
+
+    if (loaderContainer) {
+        loaderContainer.classList.remove('hidden');
+
+        const loaderDiv = loaderContainer.querySelector('.text-center');
+        if (loaderDiv) {
+            loaderContainer.removeChild(loaderDiv);
+        }
+    }
+};
 
   const showLoader = () => {
     const loaderContainer = document.getElementById("hidden");

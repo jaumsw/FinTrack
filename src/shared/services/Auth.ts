@@ -36,7 +36,7 @@ export async function recoverUserInformation(token: string){
     }
 
     try{
-        const response = await axios.get("http://127.0.0.1:8000/api/auth/me", {headers: headers})
+        const response = await axios.get("http://127.0.0.1:8000/api/user", {headers: headers})
         const data = response.data
         return data.user;
     } catch(error){

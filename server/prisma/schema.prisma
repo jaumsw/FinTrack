@@ -14,3 +14,16 @@ model User{
     password String
     role String
 }
+
+model Client {
+    id Int @id @default(autoincrement())
+    name String
+    cnpj String @unique
+}
+
+model Employee {
+    id Int @id @default(autoincrement())
+    name String
+    email String @unique
+    
+}
