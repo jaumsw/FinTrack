@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUser(response);
       });
     }
-  });
+  }, []);
 
   const authenticateUser = async ({ email, password }: AuthenticateInterface) => {
     await delay(1000);
@@ -71,9 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, isAuthenticated, authenticateUser, signOutUser }}
-    >
+    <AuthContext.Provider value={{ user, isAuthenticated, authenticateUser, signOutUser }}>
       {children}
     </AuthContext.Provider>
   );
