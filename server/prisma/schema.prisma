@@ -1,92 +1,55 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
-model Usuario {
-  id           Int         @id @default(autoincrement())
-  nome         String
-  email        String      @unique
-  senha        String
-  tipo         TipoUsuario 
-  clienteId    Int?        @unique
-  cliente      Cliente?    @relation(fields: [clienteId], references: [id])
-  empregadoId  Int?        @unique
-  empregado    Empregado?  @relation(fields: [empregadoId], references: [id])
-  estagiarioId Int?        @unique
-  estagiario   Estagiario? @relation(fields: [estagiarioId], references: [id])
-  admin        Boolean     @default(false)
+model User{
+    id Int @id @default(autoincrement())
+    name String
+    email String @unique
+    password String
+    role String
 }
 
-enum TipoUsuario {
-  CLIENTE
-  EMPREGADO
-  ESTAGIARIO
-  ADMINISTRADOR
+model Client {
+    id Int @id @default(autoincrement())
+    name String
+    cnpj String @unique
+    address String
+    phone String
 }
 
-model Cliente {
-  id              Int          @id @default(autoincrement())
-  descricao       String
-  nomeEmpresa     String
-  cnpj            String       @unique
-  caracteristicas String
-  contatos        Contato[]
-  emprestimos     Emprestimo[]
-  Usuario         Usuario?
-  Empregado       Empregado?   @relation(fields: [empregadoId], references: [id])
-  empregadoId     Int?
-  Estagiario      Estagiario[]
+model Employee {
+    id Int @id @default(autoincrement())
+    name String
+    email String @unique
+    adress String
+    phone String
 }
 
-model Contato {
-  id        Int     @id @default(autoincrement())
-  nome      String
-  email     String  @unique
-  telefone  String
-  clienteId Int
-  cliente   Cliente @relation(fields: [clienteId], references: [id])
+model Trainee {
+    id Int @id @default(autoincrement())
+    name String
+    nameCurse String
+    StartDate String
+    responsibilityID String
 }
 
-model Empregado {
-  id       Int       @id @default(autoincrement())
-  nome     String
-  cpf      String    @unique
-  endereco String
-  clientes Cliente[]
-  Usuario  Usuario?
+model Cad {
+    id Int @id @default(autoincrement())
+    name String
+    autor String
+    publisher String
+    exemples Int
 }
 
-model Estagiario {
-  id              Int      @id @default(autoincrement())
-  nomeCurso       String
-  dataInicio      DateTime
-  nomeResponsavel String
-  clienteId       Int
-  cliente         Cliente  @relation(fields: [clienteId], references: [id])
-  Usuario         Usuario?
-}
-
-model Periodico {
-  id          Int          @id @default(autoincrement())
-  nome        String
-  autor       String
-  editora     String
-  exemplares  Int
-  emprestimos Emprestimo[]
-}
-
-model Emprestimo {
-  id             Int       @id @default(autoincrement())
-  nomeUsuario    String
-  dataEmprestimo DateTime
-  dataDevolucao  DateTime
-  periodoId      Int
-  periodo        Periodico @relation(fields: [periodoId], references: [id])
-  Cliente        Cliente?  @relation(fields: [clienteId], references: [id])
-  clienteId      Int?
+model LoanInfo {
+    id Int @id @default(autoincrement())
+    nameEmployee String
+    dateLoan String
+    dateReturn String
 }

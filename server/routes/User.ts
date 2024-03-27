@@ -29,7 +29,7 @@ usersRouter.post("/user", async (req: Request, res: Response) => {
     try{
         const { name, email, password } = req.body;
         
-        const existingUser = await prisma.usuario.findUnique({
+        const existingUser = await prisma.user.findUnique({
             where: {
                 email,
             },
@@ -39,13 +39,14 @@ usersRouter.post("/user", async (req: Request, res: Response) => {
             return res.status(400).json({ message: "O email fornecido já está em uso." });
         }
 
+        const role = "user";
 
-        const user = await prisma.usuario.create({
+        const user = await prisma.user.create({
             data:{
-                nome: name,
-                email: email,
-                senha: password,
-                tipo: "CLIENTE",
+                name,
+                email,
+                password,
+                role
             }
         });
 

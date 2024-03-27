@@ -16,24 +16,24 @@ authRouter.post("/auth", async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Credenciais inválidas" });
     }
 
-    const user = await prisma.usuario.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email,
       },
     });
 
     if (user) {
-      if (user.senha === password) {
+      if (user.password === password) {
         const expiresIn = 60 * 60 * 24;
 
-        const token = jwt.sign({ user }, user.senha, { expiresIn });
+        const token = jwt.sign({ user }, user.password, { expiresIn });
         console.log(token);
 
         res.status(200).json({
           token: `${token}`,
           user: {
             id: user.id,
-            name: user.nome,
+            name: user.name,
             email: user.email,
           },
         });
