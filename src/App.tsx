@@ -5,6 +5,7 @@ import Login from "@pages/login/Login"
 import Register from "@/pages/register/Register"
 import PrivateRoutes from "@/shared/components/PrivateRoutes"
 import Painel from "@/pages/painel/Painel"
+import SobreIob from './pages/sobre-iob/SobreIOB';
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
           {/* Routes Closes */}
           <Route element={<PrivateRoutes/>}>
             <Route path="/painel" element={<Painel />}/>
+            <Route path="/dados-iob" element={<SobreIob />}/>
           </Route>
         </Routes>
       </BrowserRouter>

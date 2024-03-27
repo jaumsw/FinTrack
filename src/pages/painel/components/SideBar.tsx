@@ -20,12 +20,12 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
     { title: "Clientes", path: "/clientes", icon: <UserGroupIcon className="w-5 h-5" /> },
     { title: "Funcionarios", path: "/funcionarios", icon: <UserGroupIcon className="w-5 h-5" /> },
     {
-      title: "Calendário IOB",
+      title: "Calendário",
       path: "/calendário-iob",
       icon: <CalendarIcon className="w-5 h-5" />,
     },
     {
-      title: "Dados do IOB",
+      title: "IOB",
       path: "/dados-iob",
       icon: <DocumentChartBarIcon className="w-5 h-5" />,
     },
@@ -39,18 +39,20 @@ const SideBar = ({ children }: { children: React.ReactNode }) => {
         } md:min-h-screen h-auto bg-[#427386] relative duration-200 shadow-lg flex flex-col justify-between`}
       >
         <div>
+          <div className="relative">
           <div className={`${!open ? "hidden" : ""} flex justify-center items-center`}>
             <img src={logo} alt="logo" className="w-15 h-14 mt-6 font-mono" />
           </div>
           <span className={`${!open ? "hidden" : "flex"} text-white font-semibold justify-center absolute ml-[90px] `}>FinTrack</span>
           <button
-            className={`w-8 h-8 border-2 rounded-full mt-4 ml-auto bg-zinc-200 text-blue-600 absolute -right-3 duration-300 ${
+            className={`w-8 h-8 border-2 rounded-full mt-4 ml-auto bg-zinc-200 text-blue-600 absolute top-0 -right-3 duration-300 ${
               !open ? "rotate-180" : ""
             }`}
             onClick={() => setOpen(!open)}
           >
             <ChevronLeftIcon className="w-6" />
           </button>
+          </div>
           <div
             className={`flex items-center ${
               open ? "w-52" : "w-9"
